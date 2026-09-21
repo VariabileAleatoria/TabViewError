@@ -5,41 +5,48 @@
  * @format
  */
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import React from 'react';
+import { Tab, Text, TabView } from '@rneui/themed';
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+export default () => {
+const [index, setIndex] = React.useState(0);
 
-  return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
-}
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
+return (
+  <>
+    <Tab
+      value={index}
+      onChange={(e) => setIndex(e)}
+      indicatorStyle={{
+        backgroundColor: 'white',
+        height: 3,
+      }}
+      variant="primary"
+    >
+      <Tab.Item
+        title="Recent"
+        titleStyle={{ fontSize: 12 }}
       />
-    </View>
-  );
-}
+      <Tab.Item
+        title="favorite"
+        titleStyle={{ fontSize: 12 }}
+      />
+      <Tab.Item
+        title="cart"
+        titleStyle={{ fontSize: 12 }}
+      />
+    </Tab>
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
-
-export default App;
+    <TabView value={index} onChange={setIndex} animationType="spring">
+      <TabView.Item style={{ backgroundColor: 'red', width: '100%' }}>
+        <Text h1>Recent</Text>
+      </TabView.Item>
+      <TabView.Item style={{ backgroundColor: 'blue', width: '100%' }}>
+        <Text h1>Favorite</Text>
+      </TabView.Item>
+      <TabView.Item style={{ backgroundColor: 'green', width: '100%' }}>
+        <Text h1>Cart</Text>
+      </TabView.Item>
+    </TabView>
+  </>
+);
+};
